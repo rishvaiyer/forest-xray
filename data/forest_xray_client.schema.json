@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forest-xray.local/schema/client-v1.json",
+  "title": "Forest X-Ray client bundle",
+  "type": "object",
+  "required": [
+    "pilot",
+    "collection_version",
+    "bbox",
+    "footprints",
+    "selected_profile",
+    "provenance"
+  ],
+  "properties": {
+    "pilot": {"type": "string"},
+    "collection_version": {"const": "003"},
+    "bbox": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
+    "joined_high_quality_footprints": {"type": "integer", "minimum": 20},
+    "footprints": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": ["beam", "shot", "lat", "lon", "rh100_m", "rh50_m", "ground_elevation_m", "highest_return_elevation_m"],
+        "properties": {
+          "beam": {"type": "string"},
+          "shot": {"type": "integer"},
+          "lat": {"type": "number"},
+          "lon": {"type": "number"},
+          "rh100_m": {"type": "number"},
+          "rh50_m": {"type": "number"},
+          "ground_elevation_m": {"type": "number"},
+          "highest_return_elevation_m": {"type": "number"}
+        }
+      }
+    },
+    "selected_profile": {"type": "object", "required": ["shot", "beam", "location", "quality", "waveform_dn", "rh_m", "canopy", "terrain", "imagery"]},
+    "provenance": {"type": "object", "required": ["source", "collection_version", "join_key", "products"]}
+  }
+}
