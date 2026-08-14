@@ -17,7 +17,7 @@
     "collection_version": {"const": "003"},
     "bbox": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
     "joined_high_quality_footprints": {"type": "integer", "minimum": 20},
-    "default_shot": {"type": "integer"},
+    "default_shot": {"type": "string"},
     "profiles_path": {"type": "string"},
     "footprints": {
       "type": "array",
@@ -28,7 +28,7 @@
         "required": ["beam", "shot", "lat", "lon", "rh100_m", "rh50_m", "ground_elevation_m", "highest_return_elevation_m"],
         "properties": {
           "beam": {"type": "string"},
-          "shot": {"type": "integer"},
+          "shot": {"type": "string"},
           "lat": {"type": "number"},
           "lon": {"type": "number"},
           "rh100_m": {"type": "number"},

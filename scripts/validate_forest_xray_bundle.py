@@ -120,7 +120,7 @@ def build_client_profile(
         raise ValidationError("profile.l2b summary metrics must be finite numbers")
 
     profile: dict[str, Any] = {
-        "shot": shot,
+        "shot": str(shot),
         "beam": beam,
         "location": {"lat": float(location["lat"]), "lon": float(location["lon"])},
         "indices": {product: indices[product] for product in PRODUCTS},
@@ -226,7 +226,7 @@ def validate_proof(proof: dict[str, Any], limit: int) -> tuple[dict[str, Any], d
         normalized.append(
             {
                 "beam": beam,
-                "shot": shot,
+                "shot": str(shot),
                 "lat": float(row["lat"]),
                 "lon": float(row["lon"]),
                 "rh100_m": float(row["rh100_m"]),
@@ -289,7 +289,7 @@ def validate_proof(proof: dict[str, Any], limit: int) -> tuple[dict[str, Any], d
         "generated_on": proof.get("generated_on"),
         "joined_high_quality_footprints": proof.get("joined_high_quality_footprints"),
         "footprints": emitted,
-        "default_shot": default_shot,
+        "default_shot": str(default_shot),
         "profiles_path": "profiles",
         "provenance": provenance,
     }

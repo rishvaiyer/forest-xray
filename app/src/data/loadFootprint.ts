@@ -1,6 +1,6 @@
 import type { ClientIndex, FireReplayBundle, FootprintProfile } from '../types';
 
-const profileCache = new Map<number, FootprintProfile>();
+const profileCache = new Map<string, FootprintProfile>();
 let indexCache: ClientIndex | null = null;
 
 function dataBase(): string {
@@ -15,7 +15,7 @@ export async function loadClientIndex(): Promise<ClientIndex> {
   return indexCache;
 }
 
-export async function loadProfile(shot: number): Promise<FootprintProfile> {
+export async function loadProfile(shot: string): Promise<FootprintProfile> {
   const cached = profileCache.get(shot);
   if (cached) return cached;
   const response = await fetch(`${dataBase()}/profiles/${shot}.json`);
@@ -33,10 +33,9 @@ export async function loadFireReplay(): Promise<FireReplayBundle> {
   return (await response.json()) as FireReplayBundle;
 }
 
-export function shotFromUrl(): number | null {
-  const params = new URLSearchParams(window.location.search);
-  const shot = params.get('shot');
-  return shot ? Number(shot) : null;
+export function shotFromUrl(): string | null {
+  const shot = new URLSearchParams(window.location.search).get('shot');
+  return shot && shot.length > 0 ? shot : null;
 }
 
 export function modeFromUrl(): 'scan' | 'compare' | 'fire' {
@@ -45,18 +44,18 @@ export function modeFromUrl(): 'scan' | 'compare' | 'fire' {
   return 'scan';
 }
 
-export function updateUrl(shot: number, mode: 'scan' | 'compare' | 'fire' = 'scan') {
+export function updateUrl(shot: string, mode: 'scan' | 'compare' | 'fire' = 'scan') {
   const url = new URL(window.location.href);
-  url.searchParams.set('shot', String(shot));
+  url.searchParams.set('shot', shot);
   if (mode === 'scan') url.searchParams.delete('mode');
   else url.searchParams.set('mode', mode);
   window.history.replaceState({}, '', url.toString());
 }
 
-export function shareUrl(shot: number, mode: 'scan' | 'compare' | 'fire' = 'scan'): string {
+export function shareUrl(shot: string, mode: 'scan' | 'compare' | 'fire' = 'scan'): string {
   const url = new URL(window.location.href);
   url.search = '';
-  url.searchParams.set('shot', String(shot));
+  url.searchParams.set('shot', shot);
   if (mode !== 'scan') url.searchParams.set('mode', mode);
   return url.toString();
 }

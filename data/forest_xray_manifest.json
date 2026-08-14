@@ -5,7 +5,7 @@
     "three_product_shot_join": true
   },
   "collection_version": "003",
-  "default_shot": 29320600200465614,
+  "default_shot": "29320600200465614",
   "emitted_footprints": 64,
   "exported_profiles": 64,
   "generated_from": "data/forest_xray_proof.json",

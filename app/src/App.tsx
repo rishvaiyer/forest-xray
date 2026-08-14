@@ -30,12 +30,12 @@ export default function App() {
   const [fireReplay, setFireReplay] = useState<FireReplayBundle | null>(null);
   const [bootError, setBootError] = useState<string | null>(null);
   const [mode, setMode] = useState<'scan' | 'compare' | 'fire'>(modeFromUrl());
-  const [selectedShot, setSelectedShot] = useState<number | null>(shotFromUrl());
+  const [selectedShot, setSelectedShot] = useState<string | null>(shotFromUrl());
   const [profile, setProfile] = useState<FootprintProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [compareA, setCompareA] = useState<number | null>(null);
-  const [compareB, setCompareB] = useState<number | null>(null);
+  const [compareA, setCompareA] = useState<string | null>(null);
+  const [compareB, setCompareB] = useState<string | null>(null);
   const [absoluteScale, setAbsoluteScale] = useState(false);
   const [fireStop, setFireStop] = useState('before');
   const [copyLabel, setCopyLabel] = useState('COPY SHARE LINK');
@@ -59,7 +59,7 @@ export default function App() {
     return index.footprints.find((f) => f.shot === selectedShot) ?? index.footprints[0];
   }, [index, selectedShot]);
 
-  const selectShot = useCallback((shot: number) => {
+  const selectShot = useCallback((shot: string) => {
     setSelectedShot(shot);
     updateUrl(shot, mode);
   }, [mode]);

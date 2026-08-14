@@ -12,10 +12,10 @@ const GIBS_TILES =
 interface ForestMapProps {
   bbox: [number, number, number, number];
   footprints: FootprintSummary[];
-  selectedShot: number;
+  selectedShot: string;
   firePerimeter?: { type: 'Polygon'; coordinates: number[][][] } | null;
   fireOpacity?: number;
-  onSelect: (shot: number) => void;
+  onSelect: (shot: string) => void;
 }
 
 function rhColor(rh100: number): [number, number, number, number] {

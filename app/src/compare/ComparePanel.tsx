@@ -6,11 +6,11 @@ import { fmt, ProfileChart, WaveformChart } from '../charts/Charts';
 
 interface ComparePanelProps {
   footprints: FootprintSummary[];
-  shotA: number;
-  shotB: number;
+  shotA: string;
+  shotB: string;
   absoluteScale: boolean;
-  onShotA: (shot: number) => void;
-  onShotB: (shot: number) => void;
+  onShotA: (shot: string) => void;
+  onShotB: (shot: string) => void;
   onToggleScale: () => void;
 }
 
@@ -130,7 +130,7 @@ export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA,
       <div className="compare-selectors">
         <label>
           Footprint A
-          <select value={shotA} onChange={(e) => onShotA(Number(e.target.value))}>
+          <select value={shotA} onChange={(e) => onShotA(e.target.value)}>
             {footprints.map((f) => (
               <option key={f.shot} value={f.shot} disabled={f.shot === shotB}>{f.shot} · RH100 {fmt(f.rh100_m)} m</option>
             ))}
@@ -138,7 +138,7 @@ export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA,
         </label>
         <label>
           Footprint B
-          <select value={shotB} onChange={(e) => onShotB(Number(e.target.value))}>
+          <select value={shotB} onChange={(e) => onShotB(e.target.value)}>
             {footprints.map((f) => (
               <option key={f.shot} value={f.shot} disabled={f.shot === shotA}>{f.shot} · RH100 {fmt(f.rh100_m)} m</option>
             ))}

@@ -1,6 +1,6 @@
 export interface FootprintSummary {
   beam: string;
-  shot: number;
+  shot: string;
   lat: number;
   lon: number;
   rh100_m: number;
@@ -23,7 +23,7 @@ export interface CanopyProfile {
 }
 
 export interface FootprintProfile {
-  shot: number;
+  shot: string;
   beam: string;
   location: { lat: number; lon: number };
   indices: Record<string, number>;
@@ -53,7 +53,7 @@ export interface ClientIndex {
   generated_on?: string;
   joined_high_quality_footprints: number;
   footprints: FootprintSummary[];
-  default_shot: number;
+  default_shot: string;
   profiles_path: string;
   provenance: {
     source: string;
@@ -79,7 +79,7 @@ export interface FireReplayBundle {
     source_url: string;
     disclaimer: string;
   };
-  gedi_shot: number;
+  gedi_shot: string;
   perimeter: {
     type: 'Polygon';
     coordinates: number[][][];

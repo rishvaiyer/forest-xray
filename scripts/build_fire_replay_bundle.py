@@ -39,7 +39,7 @@ def main() -> None:
         ),
         footprints[0],
     )
-    shot = int(target["shot"])
+    shot = str(target["shot"])
     profile_path = PROFILES / f"{shot}.json"
     if not profile_path.exists():
         raise SystemExit(f"missing profile for shot {shot}; run validate_forest_xray_bundle.py first")
