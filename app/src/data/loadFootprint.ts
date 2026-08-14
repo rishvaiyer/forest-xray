@@ -9,7 +9,7 @@ function dataBase(): string {
 
 export async function loadClientIndex(): Promise<ClientIndex> {
   if (indexCache) return indexCache;
-  const response = await fetch(`${dataBase()}/forest_xray_client.json`);
+  const response = await fetch(`${dataBase()}/forest_xray_client.json`, { cache: 'no-store' });
   if (!response.ok) throw new Error(`Failed to load client index (${response.status})`);
   indexCache = (await response.json()) as ClientIndex;
   return indexCache;
@@ -18,7 +18,7 @@ export async function loadClientIndex(): Promise<ClientIndex> {
 export async function loadProfile(shot: string): Promise<FootprintProfile> {
   const cached = profileCache.get(shot);
   if (cached) return cached;
-  const response = await fetch(`${dataBase()}/profiles/${shot}.json`);
+  const response = await fetch(`${dataBase()}/profiles/${shot}.json`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error(`Profile ${shot} not found (${response.status})`);
   }
@@ -28,7 +28,7 @@ export async function loadProfile(shot: string): Promise<FootprintProfile> {
 }
 
 export async function loadFireReplay(): Promise<FireReplayBundle> {
-  const response = await fetch(`${dataBase()}/fire_replay.json`);
+  const response = await fetch(`${dataBase()}/fire_replay.json`, { cache: 'no-store' });
   if (!response.ok) throw new Error(`Failed to load fire replay (${response.status})`);
   return (await response.json()) as FireReplayBundle;
 }
