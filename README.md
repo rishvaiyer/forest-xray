@@ -32,8 +32,9 @@ GEDI HDF5 products → Python join/validation → static JSON → React explorer
 ```
 
 The checked-in proof bundle contains up to 64 high-quality joined footprints.
-Waveforms are lazy-loaded from `data/profiles/` so the initial client index
-stays small.
+The client index includes RH metrics, ground elevation, and canopy cover so
+the header numbers appear immediately. Waveforms still load from
+`data/profiles/` on selection. Compare mode ships three curated story pairs.
 
 ## Run locally
 

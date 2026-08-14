@@ -21,7 +21,7 @@ export function FireReplayPanel({ bundle, onTimelineChange }: FireReplayPanelPro
     <section className="panel fire-panel">
       <div className="panel-head">
         <div>
-          <span className="kicker">FIRE IMPACT REPLAY</span>
+          <span className="kicker">Historical replay</span>
           <h2>{bundle.fire.name} ({bundle.fire.year})</h2>
         </div>
         <span className="version-chip">{bundle.severity_at_point.label}</span>

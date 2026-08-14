@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { FootprintProfile, FootprintSummary } from '../types';
+import type { FootprintProfile, FootprintSummary, StoryPair } from '../types';
 import { loadProfile } from '../data/loadFootprint';
 import { compareFootprints } from './compareFootprints';
 import { fmt, ProfileChart, WaveformChart } from '../charts/Charts';
@@ -12,6 +12,7 @@ interface ComparePanelProps {
   onShotA: (shot: string) => void;
   onShotB: (shot: string) => void;
   onToggleScale: () => void;
+  storyPairs?: StoryPair[];
 }
 
 function CompareSlot({
@@ -46,7 +47,7 @@ function CompareSlot({
       <div className="metric-grid compare-metrics">
         <div className="metric lime"><span className="metric-label">RH100</span><strong>{fmt(summary.rh100_m)}</strong><span className="metric-suffix">m</span></div>
         <div className="metric"><span className="metric-label">RH50</span><strong>{fmt(summary.rh50_m)}</strong><span className="metric-suffix">m</span></div>
-        <div className="metric amber"><span className="metric-label">COVER</span><strong>{profile ? fmt(profile.canopy.cover * 100, 0) : '—'}</strong><span className="metric-suffix">%</span></div>
+        <div className="metric amber"><span className="metric-label">COVER</span><strong>{fmt((profile?.canopy.cover ?? summary.cover) * 100, 0)}</strong><span className="metric-suffix">%</span></div>
         <div className="metric"><span className="metric-label">PAI</span><strong>{profile ? fmt(profile.canopy.pai) : '—'}</strong><span className="metric-suffix"></span></div>
       </div>
       {loading && <p className="status-text">Loading profile…</p>}
@@ -74,7 +75,7 @@ function CompareSlot({
   );
 }
 
-export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA, onShotB, onToggleScale }: ComparePanelProps) {
+export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA, onShotB, onToggleScale, storyPairs = [] }: ComparePanelProps) {
   const [profileA, setProfileA] = useState<FootprintProfile | null>(null);
   const [profileB, setProfileB] = useState<FootprintProfile | null>(null);
   const [loadingA, setLoadingA] = useState(false);
@@ -120,13 +121,31 @@ export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA,
     <section className="panel compare-panel">
       <div className="panel-head">
         <div>
-          <span className="kicker">03 · COMPARE</span>
-          <h2>Footprint comparison</h2>
+          <span className="kicker">Side by side</span>
+          <h2>Compare two pulses</h2>
         </div>
         <button type="button" className="ghost-button" onClick={onToggleScale}>
-          {absoluteScale ? 'SHARED RELATIVE SCALE' : 'ABSOLUTE ELEVATION SCALE'}
+          {absoluteScale ? 'Use shared height scale' : 'Use absolute elevation'}
         </button>
       </div>
+      {storyPairs.length > 0 && (
+        <div className="story-pairs" aria-label="Curated comparisons">
+          {storyPairs.map((pair) => {
+            const active = shotA === pair.shot_a && shotB === pair.shot_b;
+            return (
+              <button
+                key={pair.id}
+                type="button"
+                className={`story-pair ${active ? 'is-active' : ''}`}
+                onClick={() => { onShotA(pair.shot_a); onShotB(pair.shot_b); }}
+              >
+                <span className="story-pair-label">{pair.label}</span>
+                <span className="story-pair-prompt">{pair.prompt}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
       <div className="compare-selectors">
         <label>
           Footprint A
@@ -171,7 +190,7 @@ export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA,
       </div>
       {summaryLines.length > 0 && (
         <div className="compare-summary">
-          <span className="kicker">DETERMINISTIC SUMMARY</span>
+          <span className="kicker">Rule-based summary</span>
           <ul>{summaryLines.map((line) => <li key={line}>{line}</li>)}</ul>
         </div>
       )}

@@ -10,6 +10,7 @@
   "footprints": [
     {
       "beam": "BEAM0110",
+      "cover": 0.9775069952011108,
       "ground_elevation_m": 65.4217758178711,
       "highest_return_elevation_m": 167.94532775878906,
       "lat": 41.28937160811085,
@@ -20,6 +21,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.9714304804801941,
       "ground_elevation_m": -14.082107543945312,
       "highest_return_elevation_m": 87.6314468383789,
       "lat": 41.2731313642759,
@@ -30,6 +32,7 @@
     },
     {
       "beam": "BEAM0001",
+      "cover": 0.9184494614601135,
       "ground_elevation_m": 57.872779846191406,
       "highest_return_elevation_m": 156.0532684326172,
       "lat": 41.331613047676406,
@@ -40,6 +43,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.9678853154182434,
       "ground_elevation_m": 147.57972717285156,
       "highest_return_elevation_m": 246.5850372314453,
       "lat": 41.28166390488502,
@@ -50,6 +54,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.96055668592453,
       "ground_elevation_m": 38.24540710449219,
       "highest_return_elevation_m": 135.60812377929688,
       "lat": 41.27984508503154,
@@ -60,6 +65,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.8945993185043335,
       "ground_elevation_m": 308.33709716796875,
       "highest_return_elevation_m": 403.8126220703125,
       "lat": 41.298765643025014,
@@ -70,6 +76,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.9140653610229492,
       "ground_elevation_m": 327.1673583984375,
       "highest_return_elevation_m": 422.53057861328125,
       "lat": 41.298460819868964,
@@ -80,6 +87,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.9130833148956299,
       "ground_elevation_m": 84.9939193725586,
       "highest_return_elevation_m": 179.34544372558594,
       "lat": 41.314592418008736,
@@ -90,6 +98,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.9146209359169006,
       "ground_elevation_m": 220.6822509765625,
       "highest_return_elevation_m": 315.633056640625,
       "lat": 41.29269988337984,
@@ -100,6 +109,7 @@
     },
     {
       "beam": "BEAM0000",
+      "cover": 0.9200779795646667,
       "ground_elevation_m": 53.27961349487305,
       "highest_return_elevation_m": 146.36766052246094,
       "lat": 41.32660352951589,
@@ -110,6 +120,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.5818017721176147,
       "ground_elevation_m": 50.75276184082031,
       "highest_return_elevation_m": 143.6487579345703,
       "lat": 41.32249012997359,
@@ -120,6 +131,7 @@
     },
     {
       "beam": "BEAM0001",
+      "cover": 0.9209645986557007,
       "ground_elevation_m": 58.804107666015625,
       "highest_return_elevation_m": 151.36558532714844,
       "lat": 41.32282920803255,
@@ -130,6 +142,7 @@
     },
     {
       "beam": "BEAM0001",
+      "cover": 0.8686415553092957,
       "ground_elevation_m": 50.89959716796875,
       "highest_return_elevation_m": 142.82542419433594,
       "lat": 41.33040272507813,
@@ -140,6 +153,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.8696420192718506,
       "ground_elevation_m": 207.09532165527344,
       "highest_return_elevation_m": 299.4681701660156,
       "lat": 41.26857343813414,
@@ -150,6 +164,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.8640810251235962,
       "ground_elevation_m": 5.1786394119262695,
       "highest_return_elevation_m": 97.33432006835938,
       "lat": 41.28452011047564,
@@ -160,6 +175,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.9340104460716248,
       "ground_elevation_m": 204.72630310058594,
       "highest_return_elevation_m": 296.5202941894531,
       "lat": 41.315052809555446,
@@ -170,6 +186,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.8669173121452332,
       "ground_elevation_m": 67.08457946777344,
       "highest_return_elevation_m": 159.49551391601562,
       "lat": 41.28269427057473,
@@ -180,6 +197,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.9133421182632446,
       "ground_elevation_m": 45.92261505126953,
       "highest_return_elevation_m": 137.99917602539062,
       "lat": 41.294128105423326,
@@ -190,6 +208,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.9058928489685059,
       "ground_elevation_m": 429.8034973144531,
       "highest_return_elevation_m": 520.9991455078125,
       "lat": 41.44377013330028,
@@ -200,6 +219,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.9385095238685608,
       "ground_elevation_m": 3.285165548324585,
       "highest_return_elevation_m": 95.14583587646484,
       "lat": 41.278935003844346,
@@ -210,6 +230,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.8458853960037231,
       "ground_elevation_m": 272.2962951660156,
       "highest_return_elevation_m": 363.5787048339844,
       "lat": 41.28439652125853,
@@ -220,6 +241,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.563505232334137,
       "ground_elevation_m": 15.113572120666504,
       "highest_return_elevation_m": 106.48600006103516,
       "lat": 41.27954201876072,
@@ -230,6 +252,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.7762174010276794,
       "ground_elevation_m": 79.37627410888672,
       "highest_return_elevation_m": 170.24952697753906,
       "lat": 41.288156695020234,
@@ -240,6 +263,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.8643444180488586,
       "ground_elevation_m": 53.82823944091797,
       "highest_return_elevation_m": 143.53823852539062,
       "lat": 41.29473023639548,
@@ -250,6 +274,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.8782986402511597,
       "ground_elevation_m": 36.06109619140625,
       "highest_return_elevation_m": 125.51203918457031,
       "lat": 41.322795485351165,
@@ -260,6 +285,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.9373502135276794,
       "ground_elevation_m": 102.2584457397461,
       "highest_return_elevation_m": 191.43792724609375,
       "lat": 41.29411663544728,
@@ -270,6 +296,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.9584659337997437,
       "ground_elevation_m": 74.17548370361328,
       "highest_return_elevation_m": 163.8878173828125,
       "lat": 41.288460534126756,
@@ -280,6 +307,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.8419471979141235,
       "ground_elevation_m": 105.10916900634766,
       "highest_return_elevation_m": 194.21444702148438,
       "lat": 41.321572581809995,
@@ -290,6 +318,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.8001413941383362,
       "ground_elevation_m": 261.4919128417969,
       "highest_return_elevation_m": 351.5007629394531,
       "lat": 41.305645615698666,
@@ -300,6 +329,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.9301483631134033,
       "ground_elevation_m": 481.526123046875,
       "highest_return_elevation_m": 572.066650390625,
       "lat": 41.50972906980215,
@@ -310,6 +340,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.8310846090316772,
       "ground_elevation_m": 226.8907012939453,
       "highest_return_elevation_m": 316.4873962402344,
       "lat": 41.30504181422505,
@@ -320,6 +351,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.917608380317688,
       "ground_elevation_m": 42.90065383911133,
       "highest_return_elevation_m": 132.54286193847656,
       "lat": 41.29048592028827,
@@ -330,6 +362,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.8066369891166687,
       "ground_elevation_m": 102.4305648803711,
       "highest_return_elevation_m": 192.18099975585938,
       "lat": 41.27464753040856,
@@ -340,6 +373,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.9302114248275757,
       "ground_elevation_m": 87.4953384399414,
       "highest_return_elevation_m": 175.92857360839844,
       "lat": 41.32187839121074,
@@ -350,6 +384,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.9669933915138245,
       "ground_elevation_m": 365.6631774902344,
       "highest_return_elevation_m": 454.6235656738281,
       "lat": 41.30230062367296,
@@ -360,6 +395,7 @@
     },
     {
       "beam": "BEAM0001",
+      "cover": 0.7341379523277283,
       "ground_elevation_m": 450.0108642578125,
       "highest_return_elevation_m": 538.0345458984375,
       "lat": 41.45880929080287,
@@ -370,6 +406,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.7250560522079468,
       "ground_elevation_m": 201.5764617919922,
       "highest_return_elevation_m": 289.7001647949219,
       "lat": 41.31596403725339,
@@ -380,6 +417,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.879493772983551,
       "ground_elevation_m": 297.30853271484375,
       "highest_return_elevation_m": 386.2751770019531,
       "lat": 41.285907910747085,
@@ -390,6 +428,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.9675188064575195,
       "ground_elevation_m": 51.906578063964844,
       "highest_return_elevation_m": 139.93576049804688,
       "lat": 41.28755170349758,
@@ -400,6 +439,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.7850490212440491,
       "ground_elevation_m": 106.06221771240234,
       "highest_return_elevation_m": 194.1610565185547,
       "lat": 41.27347165843432,
@@ -410,6 +450,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.935117781162262,
       "ground_elevation_m": 36.537879943847656,
       "highest_return_elevation_m": 125.77120971679688,
       "lat": 41.273434084346256,
@@ -420,6 +461,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.9344664812088013,
       "ground_elevation_m": 333.6095886230469,
       "highest_return_elevation_m": 420.6850891113281,
       "lat": 41.3071452203002,
@@ -430,6 +472,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.9462766647338867,
       "ground_elevation_m": 351.0413818359375,
       "highest_return_elevation_m": 438.9967956542969,
       "lat": 41.29438972631906,
@@ -440,6 +483,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.7578800916671753,
       "ground_elevation_m": 111.43824768066406,
       "highest_return_elevation_m": 198.25823974609375,
       "lat": 41.3158033337421,
@@ -450,6 +494,7 @@
     },
     {
       "beam": "BEAM0000",
+      "cover": 0.9276151657104492,
       "ground_elevation_m": 23.148569107055664,
       "highest_return_elevation_m": 109.87156677246094,
       "lat": 41.32478811612583,
@@ -460,6 +505,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.8428086638450623,
       "ground_elevation_m": 169.39279174804688,
       "highest_return_elevation_m": 257.7221984863281,
       "lat": 41.27164338234303,
@@ -470,6 +516,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.878592312335968,
       "ground_elevation_m": 101.86356353759766,
       "highest_return_elevation_m": 188.72219848632812,
       "lat": 41.315501018636986,
@@ -480,6 +527,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.7723475098609924,
       "ground_elevation_m": 29.285415649414062,
       "highest_return_elevation_m": 115.92803955078125,
       "lat": 41.323403146515645,
@@ -490,6 +538,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.9618119597434998,
       "ground_elevation_m": 294.39794921875,
       "highest_return_elevation_m": 381.5643310546875,
       "lat": 41.2652332473731,
@@ -500,6 +549,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.6932663917541504,
       "ground_elevation_m": 306.43499755859375,
       "highest_return_elevation_m": 394.1655578613281,
       "lat": 41.29378526342155,
@@ -510,6 +560,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.7251426577568054,
       "ground_elevation_m": 65.51879119873047,
       "highest_return_elevation_m": 153.135498046875,
       "lat": 41.294430207681565,
@@ -520,6 +571,7 @@
     },
     {
       "beam": "BEAM0000",
+      "cover": 0.9357507228851318,
       "ground_elevation_m": 44.71013259887695,
       "highest_return_elevation_m": 130.64373779296875,
       "lat": 41.325088711829856,
@@ -530,6 +582,7 @@
     },
     {
       "beam": "BEAM1000",
+      "cover": 0.7971220016479492,
       "ground_elevation_m": 193.54359436035156,
       "highest_return_elevation_m": 281.1613464355469,
       "lat": 41.2686074918564,
@@ -540,6 +593,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.8322312235832214,
       "ground_elevation_m": 132.1619873046875,
       "highest_return_elevation_m": 218.68487548828125,
       "lat": 41.282082420488294,
@@ -550,6 +604,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.7809893488883972,
       "ground_elevation_m": 63.115108489990234,
       "highest_return_elevation_m": 150.0984649658203,
       "lat": 41.27373725883521,
@@ -560,6 +615,7 @@
     },
     {
       "beam": "BEAM0110",
+      "cover": 0.9640846848487854,
       "ground_elevation_m": 116.64361572265625,
       "highest_return_elevation_m": 203.12933349609375,
       "lat": 41.29088565681627,
@@ -570,6 +626,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.9038645029067993,
       "ground_elevation_m": 129.52561950683594,
       "highest_return_elevation_m": 216.1670684814453,
       "lat": 41.274950703058174,
@@ -580,6 +637,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.8862779140472412,
       "ground_elevation_m": 82.1070785522461,
       "highest_return_elevation_m": 169.08706665039062,
       "lat": 41.27434424290794,
@@ -590,6 +648,7 @@
     },
     {
       "beam": "BEAM0101",
+      "cover": 0.9420735836029053,
       "ground_elevation_m": 566.272216796875,
       "highest_return_elevation_m": 653.2479248046875,
       "lat": 41.439515464148954,
@@ -600,6 +659,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.8816897869110107,
       "ground_elevation_m": 295.1217041015625,
       "highest_return_elevation_m": 381.838623046875,
       "lat": 41.26492968891374,
@@ -610,6 +670,7 @@
     },
     {
       "beam": "BEAM0011",
+      "cover": 0.936863362789154,
       "ground_elevation_m": 244.01380920410156,
       "highest_return_elevation_m": 329.8156433105469,
       "lat": 41.30928041223018,
@@ -620,6 +681,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.8038796782493591,
       "ground_elevation_m": 308.280029296875,
       "highest_return_elevation_m": 395.1468200683594,
       "lat": 41.26432231300426,
@@ -630,6 +692,7 @@
     },
     {
       "beam": "BEAM1011",
+      "cover": 0.7842100262641907,
       "ground_elevation_m": 86.23466491699219,
       "highest_return_elevation_m": 173.02696228027344,
       "lat": 41.274040500641696,
@@ -640,6 +703,7 @@
     },
     {
       "beam": "BEAM0010",
+      "cover": 0.7542174458503723,
       "ground_elevation_m": 255.17483520507812,
       "highest_return_elevation_m": 340.90374755859375,
       "lat": 41.30728609931715,
@@ -677,5 +741,28 @@
       }
     },
     "source": "NASA LP DAAC Earthdata Cloud"
-  }
+  },
+  "story_pairs": [
+    {
+      "id": "tall-vs-open",
+      "label": "Tall and leafy vs more open",
+      "prompt": "The tallest measured return against a footprint with much lower canopy cover.",
+      "shot_a": "29320600200465614",
+      "shot_b": "29320800200087809"
+    },
+    {
+      "id": "energy-midpoint",
+      "label": "Same tall top, energy sits lower",
+      "prompt": "Two high RH100 returns. One keeps most energy high in the canopy; the other has a much lower RH50.",
+      "shot_a": "29320600200465614",
+      "shot_b": "29321100200082182"
+    },
+    {
+      "id": "ridge-vs-coast",
+      "label": "Inland ridge vs coastal ground",
+      "prompt": "Canopy height is similar. Ground elevation is not: hundreds of meters inland versus near sea level.",
+      "shot_a": "29320500200082714",
+      "shot_b": "29321100200082182"
+    }
+  ]
 }

@@ -48,8 +48,9 @@ so a bigger bump means a stronger return, not “more trees” by itself.
 4. **Share a link.** The URL updates with `?shot=` so you can bookmark or send
    one footprint to someone else.
 5. **Compare mode.** Use the COMPARE tab or `?mode=compare` to put two
-   footprints side by side. The sentences under the charts are rule-based, not
-   AI guesses.
+   footprints side by side. Start with one of the three curated pairs (tall vs
+   open, energy midpoint, ridge vs coast), or pick any two shots. The sentences
+   under the charts are rule-based, not AI guesses.
 6. **Fire replay.** Use the FIRE REPLAY tab or `?mode=fire` for a historical
    before/during/after demo. It is not a live fire warning or evacuation tool.
 

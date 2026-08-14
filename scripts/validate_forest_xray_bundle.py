@@ -277,10 +277,46 @@ def validate_proof(proof: dict[str, Any], limit: int) -> tuple[dict[str, Any], d
             provenance,
             use_terrain,
         )
+        row["cover"] = float(client_profiles[shot_key]["canopy"]["cover"])
 
     default_key = str(default_shot)
     if default_key not in client_profiles:
         raise ValidationError("default shot profile was not exported")
+
+    shots = {row["shot"] for row in emitted}
+
+    def pair(pair_id: str, label: str, prompt: str, shot_a: str, shot_b: str) -> dict[str, str] | None:
+        if shot_a in shots and shot_b in shots and shot_a != shot_b:
+            return {"id": pair_id, "label": label, "prompt": prompt, "shot_a": shot_a, "shot_b": shot_b}
+        return None
+
+    story_pairs = [
+        pair
+        for pair in (
+            pair(
+                "tall-vs-open",
+                "Tall and leafy vs more open",
+                "The tallest measured return against a footprint with much lower canopy cover.",
+                "29320600200465614",
+                "29320800200087809",
+            ),
+            pair(
+                "energy-midpoint",
+                "Same tall top, energy sits lower",
+                "Two high RH100 returns. One keeps most energy high in the canopy; the other has a much lower RH50.",
+                "29320600200465614",
+                "29321100200082182",
+            ),
+            pair(
+                "ridge-vs-coast",
+                "Inland ridge vs coastal ground",
+                "Canopy height is similar. Ground elevation is not: hundreds of meters inland versus near sea level.",
+                "29320500200082714",
+                "29321100200082182",
+            ),
+        )
+        if pair is not None
+    ]
 
     bundle = {
         "pilot": pilot,
@@ -290,6 +326,7 @@ def validate_proof(proof: dict[str, Any], limit: int) -> tuple[dict[str, Any], d
         "joined_high_quality_footprints": proof.get("joined_high_quality_footprints"),
         "footprints": emitted,
         "default_shot": str(default_shot),
+        "story_pairs": story_pairs,
         "profiles_path": "profiles",
         "provenance": provenance,
     }

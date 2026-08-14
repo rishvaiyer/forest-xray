@@ -25,7 +25,7 @@
       "maxItems": 100,
       "items": {
         "type": "object",
-        "required": ["beam", "shot", "lat", "lon", "rh100_m", "rh50_m", "ground_elevation_m", "highest_return_elevation_m"],
+        "required": ["beam", "shot", "lat", "lon", "rh100_m", "rh50_m", "ground_elevation_m", "highest_return_elevation_m", "cover"],
         "properties": {
           "beam": {"type": "string"},
           "shot": {"type": "string"},
@@ -34,7 +34,23 @@
           "rh100_m": {"type": "number"},
           "rh50_m": {"type": "number"},
           "ground_elevation_m": {"type": "number"},
-          "highest_return_elevation_m": {"type": "number"}
+          "highest_return_elevation_m": {"type": "number"},
+          "cover": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "story_pairs": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "prompt", "shot_a", "shot_b"],
+        "properties": {
+          "id": {"type": "string"},
+          "label": {"type": "string"},
+          "prompt": {"type": "string"},
+          "shot_a": {"type": "string"},
+          "shot_b": {"type": "string"}
         }
       }
     },

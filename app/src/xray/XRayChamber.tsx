@@ -3,26 +3,36 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { FootprintProfile } from '../types';
 
+const MAX_RIBBON_POINTS = 180;
+
+function downsample(values: number[], maxPoints: number) {
+  if (values.length <= maxPoints) return values;
+  const stride = Math.ceil(values.length / maxPoints);
+  const sampled: number[] = [];
+  for (let i = 0; i < values.length; i += stride) sampled.push(values[i]);
+  if (sampled[sampled.length - 1] !== values[values.length - 1]) sampled.push(values[values.length - 1]);
+  return sampled;
+}
+
 function WaveformRibbon({ values }: { values: number[] }) {
-  const max = Math.max(...values, 1);
-  const points = useMemo(() => {
-    return values.map((v, i) => {
-      const x = (i / (values.length - 1)) * 4 - 2;
-      const y = (v / max) * 2.5;
-      return [x, y, 0] as [number, number, number];
+  const sampled = useMemo(() => downsample(values, MAX_RIBBON_POINTS), [values]);
+  const max = Math.max(...sampled, 1);
+  const line = useMemo(() => {
+    const positions = new Float32Array(sampled.length * 3);
+    sampled.forEach((v, i) => {
+      positions[i * 3] = (i / (sampled.length - 1)) * 4 - 2;
+      positions[i * 3 + 1] = (v / max) * 2.5;
+      positions[i * 3 + 2] = 0;
     });
-  }, [values, max]);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.LineBasicMaterial({ color: 0x6ee4f0 });
+    return new THREE.Line(geo, material);
+  }, [sampled, max]);
 
   return (
     <group position={[-2, 0.5, 0]}>
-      {points.map((_, i) =>
-        i > 0 ? (
-          <mesh key={i} position={[(points[i][0] + points[i - 1][0]) / 2, (points[i][1] + points[i - 1][1]) / 2, 0]}>
-            <boxGeometry args={[0.04, Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]), 0.04]} />
-            <meshStandardMaterial color="#68d9ad" emissive="#68d9ad" emissiveIntensity={0.6} />
-          </mesh>
-        ) : null,
-      )}
+      <primitive object={line} />
     </group>
   );
 }
@@ -35,7 +45,7 @@ function ProfileSlices({ coverZ }: { coverZ: number[] }) {
         return (
           <mesh key={i} position={[0, y, 0]} scale={[cover * 1.2, 0.03, cover * 1.2]}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#b5ed68" transparent opacity={0.35 + cover * 0.4} />
+            <meshStandardMaterial color="#6ee4f0" transparent opacity={0.28 + cover * 0.45} />
           </mesh>
         );
       })}
@@ -55,7 +65,7 @@ function PulseRing() {
   return (
     <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
       <ringGeometry args={[0.3, 0.35, 32]} />
-      <meshStandardMaterial color="#b5ed68" transparent opacity={0.8} side={2} />
+      <meshStandardMaterial color="#6ee4f0" transparent opacity={0.8} side={2} />
     </mesh>
   );
 }
@@ -72,26 +82,26 @@ export function XRayChamber({ profile, reducedMotion }: XRayChamberProps) {
   return (
     <div className="xray-chamber" aria-label="Three-dimensional x-ray chamber visualization">
       <Canvas camera={{ position: [0, 2.5, 5], fov: 45 }}>
-        <color attach="background" args={['#07110f']} />
+        <color attach="background" args={['#10151c']} />
         <ambientLight intensity={0.4} />
-        <pointLight position={[4, 6, 4]} intensity={1.2} color="#b5ed68" />
+        <pointLight position={[4, 6, 4]} intensity={1.2} color="#6ee4f0" />
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
           <planeGeometry args={[6, 6]} />
-          <meshStandardMaterial color="#3d2a10" transparent opacity={0.6} />
+          <meshStandardMaterial color="#3a2418" transparent opacity={0.7} />
         </mesh>
         <WaveformRibbon values={profile.waveform_dn} />
         <ProfileSlices coverZ={profile.canopy.cover_z} />
         <mesh position={[1.5, (rh50 / rh100) * 3 || 1.5, 0]}>
           <torusGeometry args={[0.5, 0.02, 8, 32]} />
-          <meshStandardMaterial color="#ffcb67" emissive="#ffcb67" emissiveIntensity={0.3} />
+          <meshStandardMaterial color="#e08a4c" emissive="#e08a4c" emissiveIntensity={0.35} />
         </mesh>
         <mesh position={[1.5, 3, 0]}>
           <torusGeometry args={[0.55, 0.02, 8, 32]} />
-          <meshStandardMaterial color="#b5ed68" emissive="#b5ed68" emissiveIntensity={0.4} />
+          <meshStandardMaterial color="#6ee4f0" emissive="#6ee4f0" emissiveIntensity={0.45} />
         </mesh>
         {!reducedMotion && <PulseRing />}
       </Canvas>
-      <div className="xray-chamber-label">Measured waveform ribbon · L2B cover slices · RH50/RH100 rings</div>
+      <div className="xray-chamber-label">Waveform ribbon · cover slices · RH50 / RH100 rings</div>
     </div>
   );
 }

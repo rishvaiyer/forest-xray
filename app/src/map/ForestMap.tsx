@@ -16,11 +16,17 @@ interface ForestMapProps {
   firePerimeter?: { type: 'Polygon'; coordinates: number[][][] } | null;
   fireOpacity?: number;
   onSelect: (shot: string) => void;
+  readoutRh100?: number;
 }
 
 function rhColor(rh100: number): [number, number, number, number] {
   const t = Math.min(1, Math.max(0, (rh100 - 60) / 45));
-  return [Math.round(60 + t * 120), Math.round(180 + t * 55), Math.round(100 + t * 40), 200];
+  return [
+    Math.round(196 + t * (110 - 196)),
+    Math.round(106 + t * (228 - 106)),
+    Math.round(58 + t * (240 - 58)),
+    215,
+  ];
 }
 
 function removeFireLayers(map: maplibregl.Map) {
@@ -29,7 +35,7 @@ function removeFireLayers(map: maplibregl.Map) {
   if (map.getSource('fire-perimeter')) map.removeSource('fire-perimeter');
 }
 
-export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireOpacity = 0.25, onSelect }: ForestMapProps) {
+export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireOpacity = 0.25, onSelect, readoutRh100 }: ForestMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const overlayRef = useRef<MapboxOverlay | null>(null);
@@ -116,7 +122,7 @@ export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireO
         elevationScale: 1,
         getPosition: (d) => [d.lon, d.lat],
         getFillColor: (d) =>
-          d.shot === selectedShot ? [181, 237, 104, 240] : rhColor(d.rh100_m),
+          d.shot === selectedShot ? [110, 228, 240, 255] : rhColor(d.rh100_m),
         getElevation: (d) => d.rh100_m,
         pickable: true,
         onClick: (info) => {
@@ -156,13 +162,13 @@ export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireO
           id: 'fire-perimeter-fill',
           type: 'fill',
           source: 'fire-perimeter',
-          paint: { 'fill-color': '#ff6b35', 'fill-opacity': fireOpacity },
+          paint: { 'fill-color': '#c46a3a', 'fill-opacity': fireOpacity },
         });
         map.addLayer({
           id: 'fire-perimeter-line',
           type: 'line',
           source: 'fire-perimeter',
-          paint: { 'line-color': '#ffcb67', 'line-width': 2 },
+          paint: { 'line-color': '#e08a4c', 'line-width': 2 },
         });
       } else {
         map.setPaintProperty('fire-perimeter-fill', 'fill-opacity', fireOpacity);
@@ -173,11 +179,20 @@ export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireO
     else map.once('load', apply);
   }, [firePerimeter, fireOpacity]);
 
+  const rh = readoutRh100 ?? footprints.find((f) => f.shot === selectedShot)?.rh100_m;
+
   return (
     <div className="map-frame">
       <div ref={containerRef} className="maplibre-shell" role="application" aria-label="3D terrain map with GEDI footprints" />
+      {rh != null && (
+        <div className="scan-readout">
+          <span>Selected pulse</span>
+          <strong>{rh.toFixed(1)}</strong>
+          <em>m canopy top</em>
+        </div>
+      )}
       <button type="button" className="map-toggle" onClick={() => setShowGibs((v) => !v)}>
-        {showGibs ? 'GIBS ON · 2019-06-19 · CONTEXT ONLY' : 'SHOW NASA GIBS IMAGERY'}
+        {showGibs ? 'GIBS on · 2019-06-19 · context only' : 'Show NASA GIBS imagery'}
       </button>
     </div>
   );

@@ -7,6 +7,7 @@ export interface FootprintSummary {
   rh50_m: number;
   ground_elevation_m: number;
   highest_return_elevation_m: number;
+  cover: number;
 }
 
 export interface CanopyProfile {
@@ -46,6 +47,14 @@ export interface FootprintProfile {
   };
 }
 
+export interface StoryPair {
+  id: string;
+  label: string;
+  prompt: string;
+  shot_a: string;
+  shot_b: string;
+}
+
 export interface ClientIndex {
   pilot: string;
   collection_version: string;
@@ -54,6 +63,7 @@ export interface ClientIndex {
   joined_high_quality_footprints: number;
   footprints: FootprintSummary[];
   default_shot: string;
+  story_pairs?: StoryPair[];
   profiles_path: string;
   provenance: {
     source: string;

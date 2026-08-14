@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   loadClientIndex,
   loadFireReplay,
@@ -9,11 +9,20 @@ import {
   updateUrl,
 } from './data/loadFootprint';
 import type { ClientIndex, FireReplayBundle, FootprintProfile } from './types';
-import { ForestMap } from './map/ForestMap';
-import { XRayChamber } from './xray/XRayChamber';
 import { fmt, ProfileChart, WaveformChart } from './charts/Charts';
 import { ComparePanel } from './compare/ComparePanel';
 import { FireReplayPanel } from './fire/FireReplayPanel';
+
+const ForestMap = lazy(() => import('./map/ForestMap').then((m) => ({ default: m.ForestMap })));
+const XRayChamber = lazy(() => import('./xray/XRayChamber').then((m) => ({ default: m.XRayChamber })));
+
+function deploymentLabel() {
+  if (typeof window !== 'undefined' && window.location.hostname.endsWith('github.io')) {
+    return 'GitHub Pages';
+  }
+  if (import.meta.env.BASE_URL !== '/') return 'GitHub Pages';
+  return 'Local proof';
+}
 
 function Metric({ label, value, suffix, accent = '' }: { label: string; value: string; suffix: string; accent?: string }) {
   return (
@@ -38,7 +47,7 @@ export default function App() {
   const [compareB, setCompareB] = useState<string | null>(null);
   const [absoluteScale, setAbsoluteScale] = useState(false);
   const [fireStop, setFireStop] = useState('before');
-  const [copyLabel, setCopyLabel] = useState('COPY SHARE LINK');
+  const [copyLabel, setCopyLabel] = useState('Copy link');
   const reducedMotion = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
 
   useEffect(() => {
@@ -48,8 +57,9 @@ export default function App() {
         setFireReplay(fire);
         const shot = shotFromUrl() ?? clientIndex.default_shot;
         setSelectedShot(shot);
-        setCompareA(clientIndex.footprints[0]?.shot ?? shot);
-        setCompareB(clientIndex.footprints[1]?.shot ?? shot);
+        const pair = clientIndex.story_pairs?.[0];
+        setCompareA(pair?.shot_a ?? clientIndex.footprints[0]?.shot ?? shot);
+        setCompareB(pair?.shot_b ?? clientIndex.footprints[1]?.shot ?? shot);
       })
       .catch((e: Error) => setBootError(e.message));
   }, []);
@@ -78,106 +88,117 @@ export default function App() {
     if (selectedShot === null) return;
     try {
       await navigator.clipboard.writeText(shareUrl(selectedShot, mode));
-      setCopyLabel('COPIED');
-      setTimeout(() => setCopyLabel('COPY SHARE LINK'), 1200);
+      setCopyLabel('Copied');
+      setTimeout(() => setCopyLabel('Copy link'), 1200);
     } catch {
       setCopyLabel(shareUrl(selectedShot, mode).slice(-24));
     }
   };
 
   if (bootError) {
-    return <p className="status-text error">Failed to load data bundle: {bootError}</p>;
+    return (
+      <div className="boot-error">
+        <p className="status-text error">Could not load the scan bundle: {bootError}</p>
+      </div>
+    );
   }
 
   if (!index || !fireReplay || selectedShot === null || !selected || compareA === null || compareB === null) {
-    return <p className="status-text">Loading Forest X-Ray bundle…</p>;
+    return (
+      <div className="boot-screen">
+        <div className="boot-mark">Forest X-Ray</div>
+        <p>Listening for the echo…</p>
+      </div>
+    );
   }
 
-  const showFirePerimeter = mode === 'fire';
+  const coverPct = (profile?.canopy.cover ?? selected.cover) * 100;
+  const rh50Share = selected.rh100_m > 0 ? Math.min(90, Math.max(12, (selected.rh50_m / selected.rh100_m) * 100)) : 50;
 
   return (
     <>
       <header className="topbar">
         <div className="brand">
-          <span className="brand-mark">⌁</span>
-          <div>
-            <strong>FOREST X-RAY</strong>
-            <small>ORBITAL CANOPY OBSERVATORY</small>
-          </div>
+          <strong>Forest X-Ray</strong>
+          <small>Redwood National & State Parks</small>
         </div>
         <nav className="mode-nav" aria-label="View mode">
-          {(['scan', 'compare', 'fire'] as const).map((m) => (
+          {([
+            ['scan', 'Scan'],
+            ['compare', 'Compare'],
+            ['fire', 'Fire replay'],
+          ] as const).map(([id, label]) => (
             <button
-              key={m}
+              key={id}
               type="button"
-              className={`mode-button ${mode === m ? 'is-active' : ''}`}
+              className={`mode-button ${mode === id ? 'is-active' : ''}`}
               onClick={() => {
-                setMode(m);
-                updateUrl(selectedShot, m);
-                if (m === 'fire') selectShot(fireReplay.gedi_shot);
+                setMode(id);
+                updateUrl(selectedShot, id);
+                if (id === 'fire') selectShot(fireReplay.gedi_shot);
               }}
             >
-              {m === 'scan' ? 'SCAN' : m === 'compare' ? 'COMPARE' : 'FIRE REPLAY'}
+              {label}
             </button>
           ))}
         </nav>
         <div className="header-meta">
           <span className="live-dot" />
-          <span>LOCAL PROOF MODE</span>
-          <span className="version-chip">GEDI V{index.collection_version}</span>
+          <span>{deploymentLabel()}</span>
+          <span className="version-chip">GEDI v{index.collection_version}</span>
         </div>
       </header>
 
-      <section className="hero">
-        <div className="eyebrow">REDWOOD NATIONAL & STATE PARKS · CALIFORNIA</div>
-        <h1>Read the forest in layers.</h1>
-        <p>A measured scan of canopy structure, returned photon energy, and terrain. One footprint at a time.</p>
+      <section className="lede">
+        <h1>Click a pulse from space. Watch the forest stack itself.</h1>
+        <p>
+          Each glowing column is one 25-meter laser footprint. The echo becomes height, cover, and ground — not a photograph of individual trees.
+        </p>
       </section>
 
-      <section className="how-to panel">
-        <div className="how-to-intro">
-          <span className="kicker">START HERE</span>
-          <h2>How to read this, like you are five</h2>
-          <p>Think of GEDI as a space flashlight. It shines down, listens to the echo, and turns that echo into a forest height story.</p>
-        </div>
-        <div className="how-to-steps">
-          {[
-            ['01', 'Pick a column', 'Each glowing column is one 25 m circle on the ground where the satellite sent a laser pulse.'],
-            ['02', 'Follow the squiggle', 'The waveform is the echo. Bigger bumps mean more laser energy bounced back.'],
-            ['03', 'Read the numbers', 'RH100 is the top of the measured return. RH50 is halfway. COVER is how leafy the spot looks.'],
-          ].map(([num, title, body]) => (
-            <article key={num} className="how-to-step">
-              <span className="step-number">{num}</span>
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </article>
-          ))}
-        </div>
+      <section className="look-strip" aria-label="How to look">
+        <article className="look-item">
+          <strong>Pick a column</strong>
+          <p>One ISS laser pulse, about 25 m across, sampled along an orbital track.</p>
+        </article>
+        <article className="look-item">
+          <strong>Follow the echo</strong>
+          <p>The waveform is returned energy. Bigger bumps mean more bounce at that height.</p>
+        </article>
+        <article className="look-item">
+          <strong>Read the ticks</strong>
+          <p>RH100 is the top return. RH50 is the energy midpoint. Cover is how leafy the circle looks.</p>
+        </article>
       </section>
 
-      <main className="main-grid">
+      <main className={`stage ${mode === 'scan' ? 'is-split' : 'is-wide'}`}>
         <section className="panel map-panel">
           <div className="panel-head">
             <div>
-              <span className="kicker">01 · ORBITAL SWEEP</span>
+              <span className="kicker">Orbital sweep</span>
               <h2>Footprint field</h2>
             </div>
-            <span className="panel-count">{index.joined_high_quality_footprints.toLocaleString()} JOINED</span>
+            <span className="panel-count">{index.joined_high_quality_footprints.toLocaleString()} joined returns</span>
           </div>
-          <ForestMap
-            bbox={index.bbox}
-            footprints={index.footprints}
-            selectedShot={selectedShot}
-            firePerimeter={showFirePerimeter ? fireReplay.perimeter : null}
-            fireOpacity={fireStop === 'before' ? 0.08 : fireStop === 'during' ? 0.35 : 0.22}
-            onSelect={selectShot}
-          />
+          <Suspense fallback={<p className="status-text">Loading terrain map…</p>}>
+            <ForestMap
+              bbox={index.bbox}
+              footprints={index.footprints}
+              selectedShot={selectedShot}
+              firePerimeter={mode === 'fire' ? fireReplay.perimeter : null}
+              fireOpacity={fireStop === 'before' ? 0.08 : fireStop === 'during' ? 0.35 : 0.22}
+              onSelect={selectShot}
+              readoutRh100={selected.rh100_m}
+            />
+          </Suspense>
           <div className="map-legend">
             <span className="legend-dot selected" />
-            <span>selected footprint</span>
+            <span>selected</span>
             <span className="legend-dot" />
-            <span>high-quality returns</span>
-            <span className="map-note">25 m nominal footprint · MapLibre terrain</span>
+            <span>taller canopy</span>
+            <span className="legend-dot short" />
+            <span>shorter canopy</span>
+            <span className="map-note">25 m footprint · MapLibre terrain</span>
           </div>
         </section>
 
@@ -185,7 +206,7 @@ export default function App() {
           <section className="panel xray-panel">
             <div className="panel-head">
               <div>
-                <span className="kicker">02 · SELECTED RETURN</span>
+                <span className="kicker">Selected return</span>
                 <h2>Canopy x-ray</h2>
               </div>
               <button type="button" className="ghost-button" onClick={handleCopy}>{copyLabel}</button>
@@ -198,20 +219,29 @@ export default function App() {
             <div className="metric-grid">
               <Metric label="RH100" value={fmt(selected.rh100_m)} suffix="m" accent="lime" />
               <Metric label="RH50" value={fmt(selected.rh50_m)} suffix="m" />
-              <Metric label="COVER" value={profile ? fmt(profile.canopy.cover * 100) : '—'} suffix="%" accent="amber" />
-              <Metric label="GROUND" value={fmt(profile?.canopy.ground_elevation_m ?? selected.ground_elevation_m)} suffix="m" />
+              <Metric label="Cover" value={fmt(coverPct)} suffix="%" accent="amber" />
+              <Metric label="Ground" value={fmt(profile?.canopy.ground_elevation_m ?? selected.ground_elevation_m)} suffix="m" />
             </div>
-            {loading && <p className="status-text">Loading waveform profile…</p>}
+            {loading && <p className="status-text">Loading waveform…</p>}
             {error && <p className="status-text error">{error}</p>}
             {profile && (
               <>
-                <XRayChamber profile={profile} reducedMotion={reducedMotion} />
+                <div className="xray-stage">
+                  <div className="height-rail" aria-hidden="true">
+                    <span className="rail-tick top">RH100 {fmt(selected.rh100_m, 0)} m</span>
+                    <span className="rail-tick mid" style={{ bottom: `${rh50Share}%` }}>RH50 {fmt(selected.rh50_m, 0)} m</span>
+                    <span className="rail-tick ground">ground</span>
+                  </div>
+                  <Suspense fallback={<p className="status-text">Loading x-ray…</p>}>
+                    <XRayChamber profile={profile} reducedMotion={reducedMotion} />
+                  </Suspense>
+                </div>
                 <div className="chart-section">
-                  <div className="chart-title"><span>RETURNED ENERGY</span><span>{profile.waveform_dn.length.toLocaleString()} bins</span></div>
+                  <div className="chart-title"><span>Returned energy</span><span>{profile.waveform_dn.length.toLocaleString()} bins</span></div>
                   <WaveformChart values={profile.waveform_dn} />
                 </div>
                 <div className="chart-section">
-                  <div className="chart-title"><span>CANOPY COVER PROFILE</span><span>top → ground</span></div>
+                  <div className="chart-title"><span>Canopy cover profile</span><span>top → ground</span></div>
                   <ProfileChart coverZ={profile.canopy.cover_z} groundElevation={profile.canopy.ground_elevation_m} highestReturn={profile.canopy.highest_return_elevation_m} />
                 </div>
               </>
@@ -229,6 +259,7 @@ export default function App() {
           onShotA={setCompareA}
           onShotB={setCompareB}
           onToggleScale={() => setAbsoluteScale((v) => !v)}
+          storyPairs={index.story_pairs}
         />
       )}
 
@@ -236,20 +267,20 @@ export default function App() {
 
       <section className="provenance panel">
         <div>
-          <span className="kicker">TRACEABILITY</span>
-          <h2>What this scan is, and is not</h2>
+          <span className="kicker">Traceability</span>
+          <h2>What this scan is</h2>
         </div>
-        <p>This view is built from joined GEDI Level 1B waveform, Level 2A relative heights, and Level 2B canopy structure. It is a scientific footprint visualization, not a literal photograph or reconstruction of individual trees.</p>
+        <p>Joined GEDI Level 1B waveform, Level 2A relative heights, and Level 2B canopy structure. A scientific footprint visualization, not a reconstruction of individual trees, and not a live fire tool.</p>
         <div className="source-list">
-          <a href="https://gedi.umd.edu/dataproducts/products/" target="_blank" rel="noreferrer">NASA GEDI products ↗</a>
-          <a href="https://epqs.nationalmap.gov/v1/docs" target="_blank" rel="noreferrer">USGS 3DEP terrain ↗</a>
-          <a href="https://nasa-gibs.github.io/gibs-api-docs/access-basics/" target="_blank" rel="noreferrer">NASA GIBS imagery ↗</a>
+          <a href="https://gedi.umd.edu/dataproducts/products/" target="_blank" rel="noreferrer">NASA GEDI products</a>
+          <a href="https://epqs.nationalmap.gov/v1/docs" target="_blank" rel="noreferrer">USGS 3DEP terrain</a>
+          <a href="https://nasa-gibs.github.io/gibs-api-docs/access-basics/" target="_blank" rel="noreferrer">NASA GIBS imagery</a>
         </div>
       </section>
 
       <footer className="footer">
-        <span>PROOF CAPTURED {index.generated_on}</span>
-        <span>NO BACKEND · STATIC NASA-DERIVED FIXTURE</span>
+        <span>Proof captured {index.generated_on}</span>
+        <span>No backend · static NASA-derived fixture</span>
       </footer>
     </>
   );
