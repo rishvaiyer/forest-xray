@@ -17,6 +17,8 @@ interface ForestMapProps {
   fireOpacity?: number;
   onSelect: (shot: string) => void;
   readoutRh100?: number;
+  readoutCover?: number;
+  readoutStories?: number;
 }
 
 function rhColor(rh100: number): [number, number, number, number] {
@@ -35,7 +37,7 @@ function removeFireLayers(map: maplibregl.Map) {
   if (map.getSource('fire-perimeter')) map.removeSource('fire-perimeter');
 }
 
-export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireOpacity = 0.25, onSelect, readoutRh100 }: ForestMapProps) {
+export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireOpacity = 0.25, onSelect, readoutRh100, readoutCover, readoutStories }: ForestMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const overlayRef = useRef<MapboxOverlay | null>(null);
@@ -186,9 +188,10 @@ export function ForestMap({ bbox, footprints, selectedShot, firePerimeter, fireO
       <div ref={containerRef} className="maplibre-shell" role="application" aria-label="3D terrain map with GEDI footprints" />
       {rh != null && (
         <div className="scan-readout">
-          <span>Selected pulse</span>
-          <strong>{rh.toFixed(1)}</strong>
-          <em>m canopy top</em>
+          <span>This spotlight</span>
+          <strong>{rh.toFixed(0)}</strong>
+          <em>meters to the highest bounce{readoutStories ? ` · ~${readoutStories} stories` : ''}</em>
+          {readoutCover != null && <em className="scan-cover">{readoutCover.toFixed(0)}% of the circle is leafy</em>}
         </div>
       )}
       <button type="button" className="map-toggle" onClick={() => setShowGibs((v) => !v)}>
