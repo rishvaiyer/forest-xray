@@ -1,73 +1,81 @@
 # Forest X-Ray
 
-Phase 0 data-proof harness for the Redwood National and State Parks pilot.
+[![Deploy GitHub Pages](https://github.com/rishvaiyer/forest-xray/actions/workflows/pages.yml/badge.svg)](https://github.com/rishvaiyer/forest-xray/actions/workflows/pages.yml)
 
-This is intentionally data-first. It discovers current GEDI granules without
-credentials and reports whether a local Earthdata session is available. It does
-not download protected files, store credentials, or claim a joined footprint
-until authenticated HDF5 inputs are present.
+An interactive NASA GEDI forest-canopy explorer for Redwood National and State
+Parks. Forest X-Ray turns joined waveform, relative-height, and canopy-structure
+measurements into a footprint map, vertical canopy view, comparison tool, and
+historical fire replay.
 
-## Run
+**[Open the live explorer](https://rishvaiyer.github.io/forest-xray/)**
 
-```bash
-/tmp/forest-xray-venv/bin/python scripts/forest_xray_probe.py
+## What you can explore
+
+- Select glowing GEDI footprints on a MapLibre 3D terrain map.
+- Inspect each footprint's waveform, RH50/RH100 heights, canopy cover, and
+  ground elevation.
+- View the return as an interactive Three.js canopy "x-ray."
+- Compare two footprints with deterministic, non-AI summaries.
+- Replay a historical Slater Fire example with clear before/during/after
+  context.
+- Share a selected footprint or mode directly from the URL.
+
+## How it works
+
+Forest X-Ray is a static application: an offline Python pipeline joins NASA
+GEDI V003 L1B, L2A, and L2B products, validates the result, and exports compact
+JSON for the Vite/React client. The browser never receives Earthdata
+credentials and does not call protected NASA services.
+
+```text
+GEDI HDF5 products → Python join/validation → static JSON → React explorer
 ```
 
-The command emits JSON on stdout and diagnostics on stderr. Once Earthdata
-authentication is configured locally, the same probe is the entry point for the
-minimal V003 L1B/L2A/L2B subset and join check.
+The checked-in proof bundle contains up to 64 high-quality joined footprints.
+Waveforms are lazy-loaded from `data/profiles/` so the initial client index
+stays small.
 
-## Current proof bundle
-
-After authenticating, the Phase 0 download and bundle build are:
+## Run locally
 
 ```bash
-/tmp/forest-xray-venv/bin/python scripts/build_proof_bundle.py
+cd app
+npm ci
+npm run dev
+```
+
+Open the localhost URL printed by Vite.
+
+## Verify
+
+```bash
+python3 scripts/validate_forest_xray_bundle.py --check-only
+cd app
+npm test
+npm run build
+```
+
+Every push to `main` runs the tests, builds the static app, and deploys it to
+GitHub Pages.
+
+## Rebuild the proof data
+
+Rebuilding requires authenticated local GEDI HDF5 inputs and Python with
+`h5py` and `numpy`:
+
+```bash
+python3 scripts/forest_xray_probe.py
+python3 scripts/build_proof_bundle.py
 python3 scripts/validate_forest_xray_bundle.py
 python3 scripts/build_fire_replay_bundle.py
 ```
 
-This writes `data/forest_xray_proof.json` from the three local V003 granules,
-exports `data/forest_xray_client.json` plus per-shot profiles under
-`data/profiles/`, and builds `data/fire_replay.json` for the fire-impact demo.
-The source HDF5 files remain outside the project under `/tmp`; credentials are
-not included.
+The source HDF5 files and Earthdata credentials stay outside the repository.
 
-## Local interface
+## Scope and limitations
 
-```bash
-cd app
-npm install --no-audit --no-fund
-npm run dev
-```
+This is a scientific footprint visualization, not a photograph, an
+individual-tree reconstruction, a live fire feed, or a fire predictor. The fire
+replay is a simplified historical demonstration.
 
-Open the printed localhost URL. The React interface includes:
-
-- MapLibre 3D terrain with deck.gl footprint columns (click to select)
-- Per-footprint lazy-loaded waveform and canopy profiles (`data/profiles/{shot}.json`)
-- Three.js x-ray chamber for the selected return
-- Shareable URLs via `?shot=<id>` and modes `?mode=compare` / `?mode=fire`
-- Two-footprint compare mode with deterministic summaries
-- Fire Impact Replay (historical Slater Fire demo, not a live predictor)
-
-It does not call Earthdata from the browser and does not include credentials.
-
-For a kid-friendly explanation of every result, see
-[`docs/using-forest-xray.md`](docs/using-forest-xray.md).
-
-## Verification
-
-```bash
-python3 scripts/validate_forest_xray_bundle.py --check-only
-cd app && npm test && npm run build
-```
-
-The validator confirms the current V003 three-product join and emits a compact
-client index with up to 64 lazy-loaded footprint profiles. The Vite build
-produces a local static app with the full `data/` tree copied into `dist/`.
-
-## Hosted preview
-
-GitHub Pages deploys the static Vite build from `main`:
-
-https://rishvaiyer.github.io/forest-xray/
+See [`docs/using-forest-xray.md`](docs/using-forest-xray.md) for a plain-language
+guide to the measurements and interface.
