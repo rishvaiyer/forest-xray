@@ -28,31 +28,27 @@ so a bigger bump means a stronger return, not “more trees” by itself.
   measured from the ground. It is a useful “middle of the canopy” number.
 - **RH100:** The highest detected relative height in that footprint. It is a
   clue about the tallest return, not a guaranteed tallest tree.
-- **Cover:** An estimate of how much of the footprint has canopy over it. A
-  value near 98% means the laser saw canopy across most of that small spot.
-- **Ground:** The ground elevation at the selected location. Forest-X-Ray
-  uses a USGS elevation lookup for this displayed terrain value.
+- **Cover:** How leafy that 25-meter circle looks. Near 98% means canopy
+  across most of the spotlight.
+- **Ground:** The land elevation. Forest X-Ray uses a USGS lookup for the
+  displayed terrain value.
 - **Joined / high quality:** The same footprint was matched across the GEDI
   waveform, height, and canopy products, and it passed the quality checks used
   by this demo.
 
 ## How to use it
 
-1. **Pick a glowing column.** Each column is one laser footprint in Redwood
-   National and State Parks. The bright column is the one currently selected.
-2. **Read the four big numbers.** Use RH50 and RH100 for height, Cover for how
-   leafy that small spot is, and Ground for the land elevation.
-3. **Look at the charts.** The waveform is the laser’s echo. The canopy-cover
-   profile shows how canopy cover changes from the top of the measured return
-   down toward the ground. Click another footprint to load its real waveform.
-4. **Share a link.** The URL updates with `?shot=` so you can bookmark or send
-   one footprint to someone else.
-5. **Compare mode.** Use the COMPARE tab or `?mode=compare` to put two
-   footprints side by side. Start with one of the three curated pairs (tall vs
-   open, energy midpoint, ridge vs coast), or pick any two shots. The sentences
-   under the charts are rule-based, not AI guesses.
-6. **Fire replay.** Use the FIRE REPLAY tab or `?mode=fire` for a historical
-   before/during/after demo. It is not a live fire warning or evacuation tool.
+1. **Pick a glowing column** or a row in the pulse list. Each one is a 25-meter
+   spotlight from the ISS — about a tennis court, not one tree.
+2. **Read the stack.** Canopy top is the highest bounce. How leafy is how much
+   of that circle has canopy. Ground is the land. RH100 / RH50 are the science
+   names sitting under those labels.
+3. **Hover the leafy chart** to slice the forest at a height. Watch the stack
+   and the 3D pulse follow. Use Next or `j` / `k` to walk along the orbit.
+4. **Share a link.** The URL keeps `?shot=` and, in compare, `?a=` and `?b=`.
+5. **Compare.** Three curated pairs, or any two pulses. The sentences are
+   rule-based, not AI guesses.
+6. **Fire replay** is a historical demo, not a live warning.
 
 ## How to read one result
 

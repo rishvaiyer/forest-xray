@@ -44,18 +44,58 @@ export function modeFromUrl(): 'scan' | 'compare' | 'fire' {
   return 'scan';
 }
 
-export function updateUrl(shot: string, mode: 'scan' | 'compare' | 'fire' = 'scan') {
+export function compareFromUrl(): { a: string | null; b: string | null } {
+  const params = new URLSearchParams(window.location.search);
+  const a = params.get('a');
+  const b = params.get('b');
+  return {
+    a: a && a.length > 0 ? a : null,
+    b: b && b.length > 0 ? b : null,
+  };
+}
+
+export function parseExplorerSearch(search: string) {
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+  const mode = params.get('mode');
+  return {
+    shot: params.get('shot') || null,
+    mode: mode === 'compare' || mode === 'fire' ? mode : 'scan' as const,
+    a: params.get('a') || null,
+    b: params.get('b') || null,
+  };
+}
+
+export function updateUrl(
+  shot: string,
+  mode: 'scan' | 'compare' | 'fire' = 'scan',
+  pair?: { a?: string; b?: string },
+) {
   const url = new URL(window.location.href);
   url.searchParams.set('shot', shot);
   if (mode === 'scan') url.searchParams.delete('mode');
   else url.searchParams.set('mode', mode);
+  if (mode === 'compare' && pair?.a && pair?.b) {
+    url.searchParams.set('a', pair.a);
+    url.searchParams.set('b', pair.b);
+  } else {
+    url.searchParams.delete('a');
+    url.searchParams.delete('b');
+  }
   window.history.replaceState({}, '', url.toString());
 }
 
-export function shareUrl(shot: string, mode: 'scan' | 'compare' | 'fire' = 'scan'): string {
+export function shareUrl(
+  shot: string,
+  mode: 'scan' | 'compare' | 'fire' = 'scan',
+  pair?: { a?: string; b?: string },
+): string {
   const url = new URL(window.location.href);
   url.search = '';
   url.searchParams.set('shot', shot);
   if (mode !== 'scan') url.searchParams.set('mode', mode);
+  if (mode === 'compare' && pair?.a && pair?.b) {
+    url.searchParams.set('a', pair.a);
+    url.searchParams.set('b', pair.b);
+  }
   return url.toString();
 }

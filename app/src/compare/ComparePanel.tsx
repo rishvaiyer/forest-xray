@@ -45,9 +45,9 @@ function CompareSlot({
         <span className="shot-id">{summary.shot}</span>
       </div>
       <div className="metric-grid compare-metrics">
-        <div className="metric lime"><span className="metric-label">RH100</span><strong>{fmt(summary.rh100_m)}</strong><span className="metric-suffix">m</span></div>
-        <div className="metric"><span className="metric-label">RH50</span><strong>{fmt(summary.rh50_m)}</strong><span className="metric-suffix">m</span></div>
-        <div className="metric amber"><span className="metric-label">COVER</span><strong>{fmt((profile?.canopy.cover ?? summary.cover) * 100, 0)}</strong><span className="metric-suffix">%</span></div>
+        <div className="metric lime"><span className="metric-label">Canopy top</span><strong>{fmt(summary.rh100_m)}</strong><span className="metric-suffix">m</span></div>
+        <div className="metric"><span className="metric-label">Mid-energy</span><strong>{fmt(summary.rh50_m)}</strong><span className="metric-suffix">m</span></div>
+        <div className="metric amber"><span className="metric-label">How leafy</span><strong>{fmt((profile?.canopy.cover ?? summary.cover) * 100, 0)}</strong><span className="metric-suffix">%</span></div>
         <div className="metric"><span className="metric-label">PAI</span><strong>{profile ? fmt(profile.canopy.pai) : '—'}</strong><span className="metric-suffix"></span></div>
       </div>
       {loading && <p className="status-text">Loading profile…</p>}
@@ -122,7 +122,7 @@ export function ComparePanel({ footprints, shotA, shotB, absoluteScale, onShotA,
       <div className="panel-head">
         <div>
           <span className="kicker">Side by side</span>
-          <h2>Compare two pulses</h2>
+          <h2>Two spotlights, side by side</h2>
         </div>
         <button type="button" className="ghost-button" onClick={onToggleScale}>
           {absoluteScale ? 'Use shared height scale' : 'Use absolute elevation'}
