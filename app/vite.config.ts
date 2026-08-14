@@ -22,6 +22,7 @@ function copyDataDir(destRoot: string) {
 }
 
 export default defineConfig({
+  base: process.env.GITHUB_PAGES === 'true' ? '/forest-xray/' : '/',
   server: {
     fs: { allow: ['..'] },
   },
@@ -42,7 +43,9 @@ export default defineConfig({
         });
       },
       closeBundle() {
-        copyDataDir(resolve(__dirname, 'dist'));
+        const dist = resolve(__dirname, 'dist');
+        copyDataDir(dist);
+        fs.writeFileSync(path.join(dist, '.nojekyll'), '');
       },
     },
   ],

@@ -4,7 +4,7 @@ const profileCache = new Map<number, FootprintProfile>();
 let indexCache: ClientIndex | null = null;
 
 function dataBase(): string {
-  return import.meta.env.DEV ? '/data' : './data';
+  return `${import.meta.env.BASE_URL.replace(/\/$/, '')}/data`;
 }
 
 export async function loadClientIndex(): Promise<ClientIndex> {

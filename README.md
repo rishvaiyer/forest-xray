@@ -64,5 +64,10 @@ cd app && npm test && npm run build
 
 The validator confirms the current V003 three-product join and emits a compact
 client index with up to 64 lazy-loaded footprint profiles. The Vite build
-produces a local static app with the full `data/` tree copied into `dist/`. No
-deployment has been made.
+produces a local static app with the full `data/` tree copied into `dist/`.
+
+## Hosted preview
+
+GitHub Pages deploys the static Vite build from `main`:
+
+https://rishvaiyer.github.io/forest-xray/
