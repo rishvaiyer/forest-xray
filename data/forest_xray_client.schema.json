@@ -1,14 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://forest-xray.local/schema/client-v1.json",
-  "title": "Forest X-Ray client bundle",
+  "$id": "https://forest-xray.local/schema/client-v2.json",
+  "title": "Forest X-Ray client index bundle",
   "type": "object",
   "required": [
     "pilot",
     "collection_version",
     "bbox",
     "footprints",
-    "selected_profile",
+    "default_shot",
+    "profiles_path",
     "provenance"
   ],
   "properties": {
@@ -16,6 +17,8 @@
     "collection_version": {"const": "003"},
     "bbox": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
     "joined_high_quality_footprints": {"type": "integer", "minimum": 20},
+    "default_shot": {"type": "integer"},
+    "profiles_path": {"type": "string"},
     "footprints": {
       "type": "array",
       "minItems": 20,
@@ -35,7 +38,6 @@
         }
       }
     },
-    "selected_profile": {"type": "object", "required": ["shot", "beam", "location", "quality", "waveform_dn", "rh_m", "canopy", "terrain", "imagery"]},
     "provenance": {"type": "object", "required": ["source", "collection_version", "join_key", "products"]}
   }
 }

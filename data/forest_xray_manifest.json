@@ -1,14 +1,13 @@
 {
   "checks": {
-    "imagery_request_ok": true,
+    "profiles_per_footprint": true,
     "quality_flags_pass": true,
-    "rh_profile_present": true,
-    "terrain_request_ok": true,
-    "three_product_shot_join": true,
-    "waveform_present": true
+    "three_product_shot_join": true
   },
   "collection_version": "003",
-  "emitted_footprints": 20,
+  "default_shot": 29320600200465614,
+  "emitted_footprints": 64,
+  "exported_profiles": 64,
   "generated_from": "data/forest_xray_proof.json",
   "join_key": [
     "beam",
@@ -16,8 +15,7 @@
   ],
   "joined_high_quality_footprints": 12327,
   "pilot": "Redwood National and State Parks",
-  "schema_version": "forest-xray-client-v1",
-  "selected_shot": 29320600200465614,
+  "schema_version": "forest-xray-client-v2",
   "source_granules": {
     "GEDI01_B": "GEDI01_B_2019170155833_O02932_02_T02267_02_006_02_V003.h5",
     "GEDI02_A": "GEDI02_A_2019170155833_O02932_02_T02267_02_004_02_V003.h5",

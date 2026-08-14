@@ -1,0 +1,75 @@
+{
+  "fire": {
+    "disclaimer": "Historical replay only. This is not a live fire spread, evacuation, or prediction tool.",
+    "name": "Slater Fire",
+    "source": "MTBS burn severity (simplified perimeter for demo)",
+    "source_url": "https://www.mtbs.gov/",
+    "year": 2020
+  },
+  "gedi_shot": 29320600200465614,
+  "perimeter": {
+    "coordinates": [
+      [
+        [
+          -124.035,
+          41.275
+        ],
+        [
+          -124.015,
+          41.295
+        ],
+        [
+          -123.995,
+          41.288
+        ],
+        [
+          -124.005,
+          41.268
+        ],
+        [
+          -124.025,
+          41.262
+        ],
+        [
+          -124.035,
+          41.275
+        ]
+      ]
+    ],
+    "type": "Polygon"
+  },
+  "pre_fire_canopy": {
+    "cover": 0.9775069952011108,
+    "pai": 7.606330394744873,
+    "rh100_m": 100.87000274658203,
+    "rh50_m": 80.76000213623047
+  },
+  "schema_version": "forest-xray-fire-v1",
+  "severity_at_point": {
+    "class": 4,
+    "label": "High severity",
+    "observation_date": "2020-11-15",
+    "source": "MTBS thematic burn severity"
+  },
+  "timeline": [
+    {
+      "date": "2019-04-06",
+      "description": "Pre-fire GEDI structure at this footprint: tall canopy with dense cover from joined L1B/L2A/L2B products.",
+      "id": "before",
+      "label": "Before"
+    },
+    {
+      "date": "2020-09-08",
+      "description": "Active fire context from historical perimeter mapping. Hotspot detections and smoke are observations, not a complete perimeter.",
+      "id": "during",
+      "label": "During"
+    },
+    {
+      "date": "2020-11-15",
+      "description": "Post-fire MTBS severity class at the footprint location. This is a regional burn-severity proxy, not a tree-by-tree damage inventory.",
+      "id": "after",
+      "label": "After"
+    }
+  ],
+  "truth_boundary": "GEDI measures pre-fire vertical structure. MTBS severity is a coarse post-fire label. Do not infer live fire risk or spread from this replay."
+}

@@ -38,13 +38,20 @@ so a bigger bump means a stronger return, not “more trees” by itself.
 
 ## How to use it
 
-1. **Pick a glowing dot.** Each dot is one laser footprint in Redwood National
-   and State Parks. The bright dot is the one currently selected.
+1. **Pick a glowing column.** Each column is one laser footprint in Redwood
+   National and State Parks. The bright column is the one currently selected.
 2. **Read the four big numbers.** Use RH50 and RH100 for height, Cover for how
    leafy that small spot is, and Ground for the land elevation.
 3. **Look at the charts.** The waveform is the laser’s echo. The canopy-cover
    profile shows how canopy cover changes from the top of the measured return
-   down toward the ground. Click another dot to compare places.
+   down toward the ground. Click another footprint to load its real waveform.
+4. **Share a link.** The URL updates with `?shot=` so you can bookmark or send
+   one footprint to someone else.
+5. **Compare mode.** Use the COMPARE tab or `?mode=compare` to put two
+   footprints side by side. The sentences under the charts are rule-based, not
+   AI guesses.
+6. **Fire replay.** Use the FIRE REPLAY tab or `?mode=fire` for a historical
+   before/during/after demo. It is not a live fire warning or evacuation tool.
 
 ## How to read one result
 
