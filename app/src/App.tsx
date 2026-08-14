@@ -196,7 +196,6 @@ export default function App() {
       </header>
 
       <section className="lede">
-        <h1>A flashlight from space. The forest answers with an echo.</h1>
         <p>
           Click a glowing column. You are looking at one 25-meter circle — about a tennis court — not a single tree. The layers you see are real laser returns from the International Space Station.
         </p>
