@@ -27,6 +27,8 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: app/package-lock.json
+      - name: Validate checked-in GEDI proof
+        run: python3 scripts/validate_forest_xray_bundle.py --check-only
       - name: Build static app
         working-directory: app
         env:
@@ -35,6 +37,7 @@ jobs:
           npm ci --no-audit --no-fund
           npm test
           npm run build
+          npm run test:scale
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

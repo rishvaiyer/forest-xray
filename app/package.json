@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:scale": "python3 ../scripts/check_scale_budget.py --app-dist dist"
   },
   "dependencies": {
     "@deck.gl/core": "^9.1.0",
