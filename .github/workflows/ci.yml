@@ -1,0 +1,29 @@
+name: Forest X-Ray checks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-scale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Validate checked-in GEDI proof
+        run: python3 scripts/validate_forest_xray_bundle.py --check-only
+      - name: Test, build, and enforce scale budgets
+        working-directory: app
+        env:
+          VITE_BASE_PATH: /forest-xray/
+        run: |
+          npm ci --no-audit --no-fund
+          npm test
+          npm run build
+          npm run test:scale
