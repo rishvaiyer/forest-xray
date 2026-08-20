@@ -94,6 +94,3 @@ The source HDF5 files and Earthdata credentials stay outside the repository.
 This is a scientific footprint visualization, not a photograph, an
 individual-tree reconstruction, a live fire feed, or a fire predictor. The fire
 replay is a simplified historical demonstration.
-
-See [`docs/using-forest-xray.md`](docs/using-forest-xray.md) for a plain-language
-guide to the measurements and interface.
