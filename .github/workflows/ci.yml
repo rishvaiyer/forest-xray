@@ -1,24 +1,13 @@
-name: Deploy GitHub Pages
+name: Forest X-Ray checks
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  pull_request:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  test-and-scale:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,18 +18,12 @@ jobs:
           cache-dependency-path: app/package-lock.json
       - name: Validate checked-in GEDI proof
         run: python3 scripts/validate_forest_xray_bundle.py --check-only
-      - name: Build static app
+      - name: Test, build, and enforce scale budgets
         working-directory: app
         env:
-          GITHUB_PAGES: "true"
+          VITE_BASE_PATH: /forest-xray/
         run: |
           npm ci --no-audit --no-fund
           npm test
           npm run build
           npm run test:scale
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: app/dist
-      - id: deployment
-        uses: actions/deploy-pages@v4

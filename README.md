@@ -58,6 +58,23 @@ npm run build
 Every push to `main` runs the tests, builds the static app, and deploys it to
 GitHub Pages.
 
+### Synthetic scale proof
+
+CI also generates 5,000 deterministic, schema-compatible footprint summaries
+in memory and partitions them into bounded spatial payloads. These rows are
+explicitly synthetic benchmark data, not NASA observations, and are never used
+for scientific conclusions. The check fails if the deterministic fixture
+changes unexpectedly, a tile exceeds 250 KiB, the total compiled JavaScript
+exceeds 825 KiB gzip, or one JavaScript chunk exceeds 525 KiB gzip.
+
+Run the same proof after a production build:
+
+```bash
+cd app
+npm run build
+npm run test:scale
+```
+
 ## Rebuild the proof data
 
 Rebuilding requires authenticated local GEDI HDF5 inputs and Python with
